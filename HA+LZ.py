@@ -22,9 +22,6 @@ write_to_file("decompressed_enwik7.txt", decompressed_enwik7)
 path_to_input_file_enwik77_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_enwik7.txt"
 run_lz77("decompress", path_to_input_file_enwik77_d, "output_enwik77.txt", 4096, 255)
 print("Правильность декдирования: ", read_file(path_to_input_file_enwik77)==read_file("output_enwik77.txt"))
-if read_file(path_to_input_file_enwik77)==read_file("output_enwik77.txt"):
-    counter += 1
-# ----------------------------------------------------------------------------------------------------------------------------------
 print("test1 HA+LZ77 book.txt")
 path_to_input_file_book = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt"
 original_size_book = get_file_size("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt")
@@ -43,9 +40,6 @@ write_to_file("decompressed_book.txt", decompressed_book)
 path_to_input_file_book_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_book.txt"
 run_lz77("decompress", path_to_input_file_book_d, "output_book.txt", 4096, 255)
 print("Правильность декдирования: ", read_file(path_to_input_file_book)==read_file("output_book.txt"))
-if read_file(path_to_input_file_book)==read_file("output_book.txt"):
-    counter += 1
-# ------------------------------------------------------------------------------------------------------------------------------
 print("test1 HA+LZ77 binfile.bin")
 path_to_input_file_bin = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin"
 original_size_bin = get_file_size("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin")
@@ -64,9 +58,6 @@ write_to_file("decompressed_bin.txt", decompressed_bin)
 path_to_input_file_bin_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_bin.txt"
 run_lz77("decompress", path_to_input_file_bin_d, "output_bin.txt", 4096, 255)
 print("Правильность декдирования: ", read_file(path_to_input_file_bin)==read_file("output_bin.txt"))
-if read_file(path_to_input_file_bin)==read_file("output_bin.txt"):
-    counter += 1
-# ------------------------------------------------------------------------------------------------------------------------------------
 print("test4 HA+LZ77 img1.png")
 png_img1 = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.png"
 png_to_raw(png_img1, "img1.raw")
@@ -86,9 +77,6 @@ write_to_file("decompressed_img1.txt", decompressed_img1)
 path_to_input_file_img1_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_img1.txt"
 run_lz77("decompress", path_to_input_file_img1_d, "output_img1.txt", 4096, 255)
 print("Правильность декдирования: ", read_file("img1.raw")==read_file("output_img1.txt"))
-if read_file("img1.raw")==read_file("output_img1.txt"):
-    counter += 1
-# ------------------------------------------------------------------------------------------------------------------------------------
 print("test1 HA+LZ77 img2.png")
 png_img2 = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.png"
 png_to_raw(png_img2, "img2.raw")
@@ -108,9 +96,6 @@ write_to_file("decompressed_img2.txt", decompressed_img2)
 path_to_input_file_img2_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_img2.txt"
 run_lz77("decompress", path_to_input_file_img2_d, "output_img2.txt", 4096, 255)
 print("Правильность декдирования: ", read_file("img2.raw")==read_file("output_img2.txt"))
-if read_file("img2.raw")==read_file("output_img2.txt"):
-    counter += 1
-# -----------------------------------------------------------------------------------------------------------------------------------
 print("test1 HA+LZ77 img3.png")
 png_img3 = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.png"
 png_to_raw(png_img3, "img3.raw")
@@ -130,12 +115,6 @@ write_to_file("decompressed_img3.txt", decompressed_img3)
 path_to_input_file_img3_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_img3.txt"
 run_lz77("decompress", path_to_input_file_img3_d, "output_img3.txt", 4096, 255)
 print("Правильность декдирования: ", read_file("img3.raw")==read_file("output_img3.txt"))
-if read_file("img3.raw")==read_file("output_img3.txt"):
-    counter += 1
-if counter == 6:
-    print('айлялюлю, все круто')
-else:
-    print("расстреливаем всех")
 counter78 = 0
 print("test1 HA+LZ78 enwik7.txt")
 path_to_input_file_enwik78 = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/enwik7.txt"
@@ -155,9 +134,6 @@ write_to_file("decompressed_enwik78.txt", decompressed_enwik78)
 path_to_input_file_enwik78_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_enwik78.txt"
 run_lz78("decompress", path_to_input_file_enwik78_d, "output_enwik78.txt")
 print("Правильность декдирования: ", read_file(path_to_input_file_enwik78)==read_file("output_enwik78.txt"))
-if read_file(path_to_input_file_enwik78)==read_file("output_enwik78.txt"):
-    counter78 += 1
-# ----------------------------------------------------------------------------------------------------------------------------------
 print("test1 HA+LZ78 book.txt")
 path_to_input_file_book78 = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt"
 original_size_book78 = get_file_size("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt")
@@ -176,9 +152,6 @@ write_to_file("decompressed_book78.txt", decompressed_book78)
 path_to_input_file_book78_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_book78.txt"
 run_lz78("decompress", path_to_input_file_book78_d, "output_book78.txt")
 print("Правильность декдирования: ", read_file(path_to_input_file_book78)==read_file("output_book78.txt"))
-if read_file(path_to_input_file_book78)==read_file("output_book78.txt"):
-    counter78 += 1
-# ------------------------------------------------------------------------------------------------------------------------------------
 print("test1 HA+LZ78 binfile.bin")
 path_to_input_file_bin78 = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin"
 original_size_bin78 = get_file_size("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin")
@@ -197,9 +170,6 @@ write_to_file("decompressed_bin78.txt", decompressed_bin78)
 path_to_input_file_bin78_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_bin78.txt"
 run_lz78("decompress", path_to_input_file_bin78_d, "output_bin78.txt")
 print("Правильность декдирования: ", read_file(path_to_input_file_bin78)==read_file("output_bin78.txt"))
-if read_file(path_to_input_file_bin78)==read_file("output_bin78.txt"):
-    counter78 += 1
-# ------------------------------------------------------------------------------------------------------------------------------------
 print("test4 HA+LZ78 img1.png")
 png_img178 = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.png"
 png_to_raw(png_img178, "img178.raw")
@@ -219,9 +189,6 @@ write_to_file("decompressed_img178.txt", decompressed_img178)
 path_to_input_file_img178_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_img178.txt"
 run_lz78("decompress", path_to_input_file_img178_d, "output_img178.txt")
 print("Правильность декдирования: ", read_file("img178.raw")==read_file("output_img178.txt"))
-if read_file("img178.raw")==read_file("output_img178.txt"):
-    counter78 += 1
-# ------------------------------------------------------------------------------------------------------------------------------------
 print("test1 HA+LZ78 img2.png")
 png_img278 = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.png"
 png_to_raw(png_img278, "img278.raw")
@@ -241,9 +208,6 @@ write_to_file("decompressed_img278.txt", decompressed_img278)
 path_to_input_file_img278_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_img278.txt"
 run_lz78("decompress", path_to_input_file_img278_d, "output_img278.txt")
 print("Правильность декдирования: ", read_file("img278.raw")==read_file("output_img278.txt"))
-if read_file("img278.raw")==read_file("output_img278.txt"):
-    counter78 += 1
-# -----------------------------------------------------------------------------------------------------------------------------------
 print("test1 HA+LZ77 img3.png")
 png_img378 = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.png"
 png_to_raw(png_img378, "img378.raw")
@@ -263,9 +227,3 @@ write_to_file("decompressed_img378.txt", decompressed_img378)
 path_to_input_file_img378_d = "C:/Users/Elisabeth/PycharmProjects/lab1_AISD/HA+LZ/decompressed_img378.txt"
 run_lz78("decompress", path_to_input_file_img378_d, "output_img378.txt")
 print("Правильность декдирования: ", read_file("img378.raw")==read_file("output_img378.txt"))
-if read_file("img378.raw")==read_file("output_img378.txt"):
-    counter78 += 1
-if counter78 == 6:
-    print('айлялюлю, все круто')
-else:
-    print("расстреливаем всех")
