@@ -19,9 +19,6 @@ write_to_file('enwik7_mtf_decoded.txt', mtf_decoded_enwik7)
 restore_bwt_blocks("enwik7_mtf_decoded.txt", "decompressed_enwik7.txt")
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/enwik7.txt", 'enwik_HA+bwt+mtf_e.bin')
 print("Правильность декдирования: ", read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/enwik7.txt")==read_file("decompressed_enwik7.txt"))
-if read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/enwik7.txt") == read_file("decompressed_enwik7.txt"):
-    counter += 1
-# ---------------------------------------------------------------------------------------------------------------------------------------------
 print("TEST 2 BOOK")
 process_bwt_blocks("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt", "book_bwte.bin")
 mtf_encoded_book = move_to_front_encode(read_file("book_bwte.bin"))
@@ -35,9 +32,6 @@ write_to_file('book_mtf_decoded.txt', mtf_decoded_book)
 restore_bwt_blocks("book_mtf_decoded.txt", "decompressed_book.txt")
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt", 'book_HA+bwt+mtf_e.bin')
 print("Правильность декдирования: ", read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt")==read_file("decompressed_book.txt"))
-if read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt") == read_file("decompressed_book.txt"):
-    counter += 1
-# --------------------------------------------------------------------------------------------------------------------------------------------
 print("TEST 3 BINARY FILE")
 process_bwt_blocks("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin", "bin_bwte.bin")
 mtf_encoded_bin = move_to_front_encode(read_file("bin_bwte.bin"))
@@ -51,9 +45,6 @@ write_to_file('bin_mtf_decoded.txt', mtf_decoded_bin)
 restore_bwt_blocks("bin_mtf_decoded.txt", "decompressed_bin.txt")
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin", 'bin_HA+bwt+mtf_e.bin')
 print("Правильность декдирования: ", read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin")==read_file("decompressed_bin.txt"))
-if read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin") == read_file("decompressed_bin.txt"):
-    counter += 1
-# ---------------------------------------------------------------------------------------------------------------------------------------------
 print("TEST 4 IMAGE 1")
 process_bwt_blocks("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.raw", "img1_bwte.bin")
 mtf_encoded_img1 = move_to_front_encode(read_file("img1_bwte.bin"))
@@ -67,9 +58,6 @@ write_to_file('img1_mtf_decoded.txt', mtf_decoded_img1)
 restore_bwt_blocks("img1_mtf_decoded.txt", "decompressed_img1.txt")
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.raw", 'img1_HA+bwt+mtf_e.bin')
 print("Правильность декдирования: ", read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.raw")==read_file("decompressed_img1.txt"))
-if read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.raw") == read_file("decompressed_img1.txt"):
-    counter += 1
-# ---------------------------------------------------------------------------------------------------------------------------------------------
 print("TEST 5 IMAGE 2")
 process_bwt_blocks("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.raw", "img2_bwte.bin")
 mtf_encoded_img2 = move_to_front_encode(read_file("img2_bwte.bin"))
@@ -83,9 +71,6 @@ write_to_file('img2_mtf_decoded.txt', mtf_decoded_img2)
 restore_bwt_blocks("img2_mtf_decoded.txt", "decompressed_img2.txt")
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.raw", 'img2_HA+bwt+mtf_e.bin')
 print("Правильность декдирования: ", read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.raw")==read_file("decompressed_img2.txt"))
-if read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.raw") == read_file("decompressed_img2.txt"):
-    counter += 1
-# ----------------------------------------------------------------------------------------------------------------------------------------------
 print("TEST 6 IMAGE 3")
 process_bwt_blocks("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.raw", "img3_bwte.bin")
 mtf_encoded_img3 = move_to_front_encode(read_file("img3_bwte.bin"))
@@ -99,10 +84,6 @@ write_to_file('img3_mtf_decoded.txt', mtf_decoded_img3)
 restore_bwt_blocks("img3_mtf_decoded.txt", "decompressed_img3.txt")
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.raw", 'img3_HA+bwt+mtf_e.bin')
 print("Правильность декдирования: ", read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.raw")==read_file("decompressed_img3.txt"))
-if read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.raw") == read_file("decompressed_img3.txt"):
-    counter += 1
-    print('айлялюлю, все круто')
-else:
-    print("расстреливаем всех")
+
 
 
