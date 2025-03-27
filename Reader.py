@@ -15,12 +15,8 @@ def calculate_compression_ratio(original_size: int, compressed_size: int) -> flo
 def calculate_entropy(data: bytes) -> float:
     if not data:
         return 0.0
-
-    # Считаем частоту каждого символа
     frequency = Counter(data)
     total_symbols = len(data)
-
-    # Рассчитываем энтропию
     entropy = 0.0
     for count in frequency.values():
         probability = count / total_symbols
@@ -56,28 +52,14 @@ def get_file_size(file_path):
         print(f"Ошибка: {e}")
         return None
 def png_to_raw(input_path: str, output_path: str) -> None:
-    """
-    Конвертирует PNG в RAW-формат (пиксельные данные без сжатия)
-
-    Параметры:
-    input_path (str): Путь к исходному PNG-файлу
-    output_path (str): Путь для сохранения RAW-файла
-
-    Возвращает:
-    None. Результат записывается в output_path
-    """
     try:
         with Image.open(input_path) as img:
-            # Конвертируем в RGB/RGBA
             if img.mode == 'P':
                 img = img.convert('RGBA')
             elif img.mode == 'L':
                 img = img.convert('RGB')
-
-            # Сохраняем RAW
             np.array(img).tofile(output_path)
 
-            # Выводим информацию
             print(f"Конвертация успешна\n"
                   f"Размер: {img.width}x{img.height}\n"
                   f"Каналы: {len(img.getbands())}\n"
