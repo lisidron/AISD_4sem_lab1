@@ -1,39 +1,8 @@
 import queue
 import struct
 import numpy as np
-from Reader import read_file, get_file_size, write_to_file, calculate_compression_ratio, analyze_compression
+from Reader import read_file, get_file_size, write_to_file, calculate_compression_ratio, analyze_compression, png_to_raw
 from PIL import Image
-def png_to_raw(input_path: str, output_path: str) -> None:
-    """
-    Конвертирует PNG в RAW-формат (пиксельные данные без сжатия)
-
-    Параметры:
-    input_path (str): Путь к исходному PNG-файлу
-    output_path (str): Путь для сохранения RAW-файла
-
-    Возвращает:
-    None. Результат записывается в output_path
-    """
-    try:
-        with Image.open(input_path) as img:
-            # Конвертируем в RGB/RGBA
-            if img.mode == 'P':
-                img = img.convert('RGBA')
-            elif img.mode == 'L':
-                img = img.convert('RGB')
-
-            # Сохраняем RAW
-            np.array(img).tofile(output_path)
-
-            # Выводим информацию
-            print(f"Конвертация успешна\n"
-                  f"Размер: {img.width}x{img.height}\n"
-                  f"Каналы: {len(img.getbands())}\n"
-                  f"Размер файла: {img.width * img.height * len(img.getbands())} байт")
-
-    except Exception as e:
-        print(f"Ошибка: {str(e)}")
-        raise
 class Node():
     def __init__(self, symbol=None, counter=None, left=None, right=None, parent=None):  # Было init → стало __init__
         self.symbol = symbol
@@ -42,7 +11,7 @@ class Node():
         self.right = right
         self.parent = parent
 
-    def __lt__(self, other):  # Добавлено для корректной работы PriorityQueue
+    def __lt__(self, other):  
         return self.counter < other.counter
 def count_symb(data: bytes) -> np.ndarray:
     counter = np.zeros(256, dtype=int)
@@ -84,29 +53,23 @@ def huffman_compress(data: bytes) -> bytes:
     coded_message = ""
     for byte in data:
         coded_message += codes[byte]
-    # Добавляем недостающие нули до полного байта
     padding = 8 - len(coded_message) % 8
     coded_message += '0' * padding
-    coded_message = f"{padding:08b}" + coded_message  # Сохраняем количество добавленных нулей
-    # Преобразуем строку двоичного кода в байты
+    coded_message = f"{padding:08b}" + coded_message 
     bytes_string = bytearray()
     for i in range(0, len(coded_message), 8):
         byte = coded_message[i:i+8]
         bytes_string.append(int(byte, 2))
-        # print(-5)
 
     return bytes(bytes_string), codes
 def huffman_decompress(compressed_data: bytes, huffman_codes: dict) -> bytes:
-    # Восстанавливаем количество добавленных нулей
     padding = compressed_data[0]
     coded_message = ""
     for byte in compressed_data[1:]:
         coded_message += f"{byte:08b}"
-        # print(4)
 
     if padding > 0:
         coded_message = coded_message[:-padding]
-    # Восстановление исходных данных
     reverse_codes = {v: k for k, v in huffman_codes.items()}
     current_code = ""
     decoded_data = bytearray()
@@ -116,7 +79,6 @@ def huffman_decompress(compressed_data: bytes, huffman_codes: dict) -> bytes:
         if current_code in reverse_codes:
             decoded_data.append(reverse_codes[current_code])
             current_code = ""
-        # print(5)
 
     return bytes(decoded_data)
 def read_huffman_codes(codes_file):
@@ -127,54 +89,37 @@ def read_huffman_codes(codes_file):
             huffman_codes[int(symbol)] = code
     return huffman_codes
 def write_huffman_codes(huffman_codes, file_path):
-    """Записывает коды Хаффмана в файл."""
     with open(file_path, 'w') as code_file:
         for symbol, code in huffman_codes.items():
             code_file.write(f"{symbol}:{code}\n")
 def save_compressed(huffman_codes: dict, compressed_data: bytes, filename: str) -> tuple[int, int]:
-    """Сохраняет коды и данные в бинарный файл. Возвращает размеры частей."""
     with open(filename, 'wb') as f:
-        # Записываем количество кодов (2 байта)
         num_codes = len(huffman_codes)
         f.write(struct.pack('>H', num_codes))
         codes_size = f.tell()
-
-        # Записываем коды
         for symbol, code in huffman_codes.items():
             code_length = len(code)
             code_bytes = int(code, 2).to_bytes((code_length + 7) // 8, 'big')
-
-            # Формат: 1 байт символ, 1 байт длина кода, N байт код
             f.write(struct.pack('>BB', symbol, code_length))
             f.write(code_bytes)
 
         codes_total_size = f.tell()
-
-        # Записываем сжатые данные
         f.write(compressed_data)
         total_size = f.tell()
 
     return codes_total_size - codes_size, total_size - codes_total_size
 def load_compressed(filename: str) -> tuple[dict, bytes]:
-    """Читает коды и данные из бинарного файла."""
     with open(filename, 'rb') as f:
-        # Читаем количество кодов
         num_codes = struct.unpack('>H', f.read(2))[0]
 
         huffman_codes = {}
         for _ in range(num_codes):
-            # Читаем символ и длину кода
             symbol, code_length = struct.unpack('>BB', f.read(2))
-
-            # Вычисляем сколько байт занимает код
             bytes_needed = (code_length + 7) // 8
             code_bytes = f.read(bytes_needed)
-
-            # Преобразуем в битовую строку
             code = bin(int.from_bytes(code_bytes, 'big'))[2:].zfill(code_length)
             huffman_codes[symbol] = code
 
-        # Читаем оставшиеся данные
         compressed_data = f.read()
 
     return huffman_codes, compressed_data
@@ -190,8 +135,6 @@ write_to_file('decompressed_enwik.txt',decompressed_enwik7)
 print("Размер финального файла после декомпрессии: ", get_file_size("decompressed_enwik.txt"))
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/enwik7.txt", 'compressed.bin')
 print("Правильность декдирования: ", text_enwik7==decompressed_enwik7)
-if text_enwik7 == decompressed_enwik7:
-    counter += 1
 print("test2 book.txt")
 text_book = read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt")
 original_size_book = get_file_size("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt")
@@ -203,8 +146,6 @@ compressed_size_book = get_file_size('compressed_book.bin')
 ratio_book = calculate_compression_ratio(original_size_book, compressed_size_book)
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/book.txt", 'compressed_book.bin')
 print("Правильность декдирования: ", text_book==decompressed_book)
-if text_book == decompressed_book:
-    counter += 1
 print("test3 b.bin")
 text_bin = read_file("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin")
 original_size_bin = get_file_size("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin")
@@ -216,8 +157,6 @@ compressed_size_bin = get_file_size('compressed_b.bin')
 ratio_bin = calculate_compression_ratio(original_size_bin, compressed_size_bin)
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/test3_bin.bin", 'compressed_b.bin')
 print("Правильность декдирования: ", text_book==decompressed_book)
-if text_bin == decompressed_bin:
-    counter += 1
 print("test4 img1.png")
 png_to_raw('C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.png', 'C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.raw')
 original_data_img1 = read_file('C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.raw')
@@ -230,8 +169,6 @@ compressed_size_img1 = get_file_size('compressed_img1.bin')
 ratio_img1 = calculate_compression_ratio(original_size_img1, compressed_size_img1)
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img1.raw", 'compressed_img1.bin')
 print("Правильность декдирования: ", original_data_img1==decompressed_img1)
-if original_data_img1 == decompressed_img1:
-    counter += 1
 print("test5 img2.png")
 png_to_raw('C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.png', 'C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.raw')
 original_data_img2 = read_file('C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.raw')
@@ -244,8 +181,6 @@ compressed_size_img2 = get_file_size('compressed_img2.bin')
 ratio_img2 = calculate_compression_ratio(original_size_img2, compressed_size_img2)
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img2.raw", 'compressed_img2.bin')
 print("Правильность декдирования: ", original_data_img2==decompressed_img2)
-if original_data_img2 == decompressed_img2:
-    counter += 1
 print("test6 img3.png")
 png_to_raw('C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.png', 'C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.raw')
 original_data_img3 = read_file('C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.raw')
@@ -258,9 +193,3 @@ compressed_size_img3 = get_file_size('compressed_img3.bin')
 ratio_img3 = calculate_compression_ratio(original_size_img3, compressed_size_img3)
 analyze_compression("C:/Users/Elisabeth/PycharmProjects/lab1_AISD/material/img3.raw", 'compressed_img3.bin')
 print("Правильность декдирования: ", original_data_img3==decompressed_img3)
-if original_data_img3 == decompressed_img3:
-    counter += 1
-if counter == 6:
-    print('айлялюлю, все круто')
-else:
-    print("расстреливаем всех")
